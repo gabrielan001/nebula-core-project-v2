@@ -745,7 +745,6 @@ select.form-control {
 
 @layer base {
   :root {
-    /* Map Tailwind variables to Perplexity design system tokens */
     --background: var(--color-background);
     --foreground: var(--color-text);
     --card: var(--color-surface);
@@ -757,7 +756,7 @@ select.form-control {
     --accent: var(--color-secondary);
     --accent-foreground: var(--color-text);
     --destructive: var(--color-error);
-    --destructive-foreground: var(--color-btn-primary-text);
+    --destructive-foreground: var(--color-surface);
     --border: var(--color-border);
     --input: var(--color-border);
     --ring: var(--color-focus-ring);
@@ -769,7 +768,6 @@ select.form-control {
   }
 
   .dark {
-    /* Dark mode inherits from Perplexity design system */
     --background: var(--color-background);
     --foreground: var(--color-text);
     --card: var(--color-surface);
@@ -781,7 +779,7 @@ select.form-control {
     --accent: var(--color-secondary);
     --accent-foreground: var(--color-text);
     --destructive: var(--color-error);
-    --destructive-foreground: var(--color-btn-primary-text);
+    --destructive-foreground: var(--color-surface);
     --border: var(--color-border);
     --input: var(--color-border);
     --ring: var(--color-focus-ring);
@@ -802,34 +800,19 @@ select.form-control {
     font-size: var(--font-size-base);
     line-height: var(--line-height-normal);
     -webkit-font-smoothing: antialiased;
-    color: var(--color-text);
-    background-color: var(--color-background);
+    transition: background-color var(--duration-normal) var(--ease-standard),
+                color var(--duration-normal) var(--ease-standard);
   }
 }
 
-/* Mobile portrait responsive breakpoint */
 @media (max-width: 480px) {
   @layer base {
-    :root {
-      --font-size-base: 13px;
-      --font-size-lg: 15px;
-      --font-size-xl: 17px;
-      --font-size-2xl: 19px;
-      --font-size-3xl: 22px;
-      --font-size-4xl: 26px;
-      --space-16: 12px;
-      --space-20: 16px;
-      --space-24: 20px;
-      --space-32: 24px;
-      --radius-base: 6px;
-      --radius-md: 8px;
-      --radius-lg: 10px;
-    }
-
     body {
-      font-size: var(--font-size-base);
-      padding-left: var(--space-12);
-      padding-right: var(--space-12);
+      font-size: var(--font-size-sm);
+    }
+    
+    :root {
+      --radius: var(--radius-sm);
     }
   }
 }
