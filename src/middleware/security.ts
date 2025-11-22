@@ -3,7 +3,8 @@ import { NextRequest } from 'next/server';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 import { createClient } from '@supabase/supabase-js';
-// Web Crypto API for hashing (Edge-compatible)
+
+// Web Crypto API (Edge Runtime compatible)
 async function hashString(message: string): Promise<string> {
   const msgBuffer = new TextEncoder().encode(message);
   const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -14,7 +15,9 @@ async function hashString(message: string): Promise<string> {
 // Initialize Supabase client for audit logging
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = supabaseUrl && supabaseKey 
+  ? createClient(supabaseUrl, supabaseKey)
+  : null;
 
 // Initialize Redis for rate limiting
 const redis = new Redis({
@@ -34,6 +37,11 @@ export async function validateApiKey(apiKey: string): Promise<{ isValid: boolean
   
   // In a real app, you would validate the API key against your database
   // This is a simplified example
+  if (!supabase) {
+    console.warn('[Supabase] Not configured');
+    return { isValid: false };
+  }
+
   const { data, error } = await supabase
     .from('api_keys')
     .select('team_id')
@@ -48,24 +56,32 @@ export async function validateApiKey(apiKey: string): Promise<{ isValid: boolean
 }
 
 export async function logRequest(
-  teamId: string,
-  path: string,
-  method: string,
-  payload: any,
-  status: number
+  req: NextRequest,
+  response: NextResponse,
+  metadata: { teamId?: string; userId?: string } = {}
 ) {
-  // Generate a hash of the payload for security using Web Crypto API
-  const payloadString = JSON.stringify(payload) || '';
-  const payloadHash = await hashString(payloadString);
+  if (!supabase) {
+    console.warn('[Supabase] Not configured');
+    return;
+  }
 
-  await supabase.from('audit_logs').insert({
-    team_id: teamId,
-    path,
-    method,
-    payload_hash: payloadHash,
-    status_code: status,
-    timestamp: new Date().toISOString(),
-  });
+  try {
+    const url = new URL(req.url);
+    const requestData = {
+      method: req.method,
+      path: url.pathname,
+      query: Object.fromEntries(url.searchParams.entries()),
+      headers: Object.fromEntries(req.headers.entries()),
+      team_id: metadata.teamId,
+      user_id: metadata.userId,
+      response_status: response.status,
+      timestamp: new Date().toISOString(),
+    };
+
+    await supabase.from('audit_logs').insert(requestData);
+  } catch (error) {
+    console.error('Error logging request:', error);
+  }
 }
 
 export async function securityMiddleware(req: NextRequest) {
@@ -125,11 +141,9 @@ export async function securityMiddleware(req: NextRequest) {
 
   // Log the request asynchronously to not block the response
   logRequest(
-    teamId,
-    url.pathname,
-    req.method,
-    requestBody,
-    response.status
+    req,
+    response,
+    { teamId }
   ).catch(console.error);
 
   return response;

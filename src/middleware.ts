@@ -1,3 +1,6 @@
+// Note: middleware.ts is deprecated in Next.js 16+
+// Consider migrating to proxy in next.config.ts
+
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { securityMiddleware } from './middleware/security';
