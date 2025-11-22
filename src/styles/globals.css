@@ -745,172 +745,50 @@ select.form-control {
 
 @layer base {
   :root {
-    /* Background colors */
-    --background: 252 252 249; /* color-cream-50 */
-    --foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Card colors */
-    --card: 255 255 253; /* color-cream-100 / color-surface */
-    --card-foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Popover colors */
-    --popover: 255 255 253; /* color-cream-100 */
-    --popover-foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Muted colors (using secondary) */
-    --muted: 94 82 64; /* color-brown-600 with opacity */
-    --muted-foreground: 98 108 113; /* color-slate-500 */
-    
-    /* Accent colors (using secondary) */
-    --accent: 94 82 64; /* color-brown-600 with opacity */
-    --accent-foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Destructive colors */
-    --destructive: 192 21 47; /* color-red-500 */
-    --destructive-foreground: 252 252 249; /* color-cream-50 */
-    
-    /* Border and input */
-    --border: 94 82 64; /* color-brown-600 with opacity */
-    --input: 94 82 64; /* color-brown-600 with opacity */
-    
-    /* Focus ring */
-    --ring: 33 128 141; /* color-teal-500 */
-    
-    /* Border radius */
-    --radius: 0.5rem; /* 8px - matches --radius-base */
-    
-    /* Primary colors */
-    --primary: 33 128 141; /* color-teal-500 */
-    --primary-foreground: 252 252 249; /* color-cream-50 */
-    
-    /* Secondary colors */
-    --secondary: 94 82 64; /* color-brown-600 with opacity */
-    --secondary-foreground: 19 52 59; /* color-slate-900 */
+    /* Map Tailwind variables to Perplexity design system tokens */
+    --background: var(--color-background);
+    --foreground: var(--color-text);
+    --card: var(--color-surface);
+    --card-foreground: var(--color-text);
+    --popover: var(--color-surface);
+    --popover-foreground: var(--color-text);
+    --muted: var(--color-secondary);
+    --muted-foreground: var(--color-text-secondary);
+    --accent: var(--color-secondary);
+    --accent-foreground: var(--color-text);
+    --destructive: var(--color-error);
+    --destructive-foreground: var(--color-btn-primary-text);
+    --border: var(--color-border);
+    --input: var(--color-border);
+    --ring: var(--color-focus-ring);
+    --radius: var(--radius-base);
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-btn-primary-text);
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-text);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      /* Background colors */
-      --background: 31 33 33; /* color-charcoal-700 */
-      --foreground: 245 245 245; /* color-gray-200 */
-      
-      /* Card colors */
-      --card: 38 40 40; /* color-charcoal-800 / color-surface */
-      --card-foreground: 245 245 245; /* color-gray-200 */
-      
-      /* Popover colors */
-      --popover: 38 40 40; /* color-charcoal-800 */
-      --popover-foreground: 245 245 245; /* color-gray-200 */
-      
-      /* Muted colors */
-      --muted: 119 124 124; /* color-gray-400 */
-      --muted-foreground: 167 169 169; /* color-gray-300 */
-      
-      /* Accent colors */
-      --accent: 119 124 124; /* color-gray-400 */
-      --accent-foreground: 245 245 245; /* color-gray-200 */
-      
-      /* Destructive colors */
-      --destructive: 255 84 89; /* color-red-400 */
-      --destructive-foreground: 245 245 245; /* color-gray-200 */
-      
-      /* Border and input */
-      --border: 119 124 124; /* color-gray-400 */
-      --input: 119 124 124; /* color-gray-400 */
-      
-      /* Focus ring */
-      --ring: 50 184 198; /* color-teal-300 */
-      
-      /* Primary colors */
-      --primary: 50 184 198; /* color-teal-300 */
-      --primary-foreground: 19 52 59; /* color-slate-900 */
-      
-      /* Secondary colors */
-      --secondary: 119 124 124; /* color-gray-400 */
-      --secondary-foreground: 245 245 245; /* color-gray-200 */
-    }
-  }
-
-  [data-color-scheme="dark"] {
-    /* Background colors */
-    --background: 31 33 33; /* color-charcoal-700 */
-    --foreground: 245 245 245; /* color-gray-200 */
-    
-    /* Card colors */
-    --card: 38 40 40; /* color-charcoal-800 / color-surface */
-    --card-foreground: 245 245 245; /* color-gray-200 */
-    
-    /* Popover colors */
-    --popover: 38 40 40; /* color-charcoal-800 */
-    --popover-foreground: 245 245 245; /* color-gray-200 */
-    
-    /* Muted colors */
-    --muted: 119 124 124; /* color-gray-400 */
-    --muted-foreground: 167 169 169; /* color-gray-300 */
-    
-    /* Accent colors */
-    --accent: 119 124 124; /* color-gray-400 */
-    --accent-foreground: 245 245 245; /* color-gray-200 */
-    
-    /* Destructive colors */
-    --destructive: 255 84 89; /* color-red-400 */
-    --destructive-foreground: 245 245 245; /* color-gray-200 */
-    
-    /* Border and input */
-    --border: 119 124 124; /* color-gray-400 */
-    --input: 119 124 124; /* color-gray-400 */
-    
-    /* Focus ring */
-    --ring: 50 184 198; /* color-teal-300 */
-    
-    /* Primary colors */
-    --primary: 50 184 198; /* color-teal-300 */
-    --primary-foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Secondary colors */
-    --secondary: 119 124 124; /* color-gray-400 */
-    --secondary-foreground: 245 245 245; /* color-gray-200 */
-  }
-
-  [data-color-scheme="light"] {
-    /* Background colors */
-    --background: 252 252 249; /* color-cream-50 */
-    --foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Card colors */
-    --card: 255 255 253; /* color-cream-100 / color-surface */
-    --card-foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Popover colors */
-    --popover: 255 255 253; /* color-cream-100 */
-    --popover-foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Muted colors */
-    --muted: 94 82 64; /* color-brown-600 */
-    --muted-foreground: 98 108 113; /* color-slate-500 */
-    
-    /* Accent colors */
-    --accent: 94 82 64; /* color-brown-600 */
-    --accent-foreground: 19 52 59; /* color-slate-900 */
-    
-    /* Destructive colors */
-    --destructive: 192 21 47; /* color-red-500 */
-    --destructive-foreground: 252 252 249; /* color-cream-50 */
-    
-    /* Border and input */
-    --border: 94 82 64; /* color-brown-600 */
-    --input: 94 82 64; /* color-brown-600 */
-    
-    /* Focus ring */
-    --ring: 33 128 141; /* color-teal-500 */
-    
-    /* Primary colors */
-    --primary: 33 128 141; /* color-teal-500 */
-    --primary-foreground: 252 252 249; /* color-cream-50 */
-    
-    /* Secondary colors */
-    --secondary: 94 82 64; /* color-brown-600 */
-    --secondary-foreground: 19 52 59; /* color-slate-900 */
+  .dark {
+    /* Dark mode inherits from Perplexity design system */
+    --background: var(--color-background);
+    --foreground: var(--color-text);
+    --card: var(--color-surface);
+    --card-foreground: var(--color-text);
+    --popover: var(--color-surface);
+    --popover-foreground: var(--color-text);
+    --muted: var(--color-secondary);
+    --muted-foreground: var(--color-text-secondary);
+    --accent: var(--color-secondary);
+    --accent-foreground: var(--color-text);
+    --destructive: var(--color-error);
+    --destructive-foreground: var(--color-btn-primary-text);
+    --border: var(--color-border);
+    --input: var(--color-border);
+    --ring: var(--color-focus-ring);
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-btn-primary-text);
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-text);
   }
 }
 
@@ -920,19 +798,39 @@ select.form-control {
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
     -webkit-font-smoothing: antialiased;
+    color: var(--color-text);
+    background-color: var(--color-background);
   }
 }
 
-/* Mobile responsive adjustments */
+/* Mobile portrait responsive breakpoint */
 @media (max-width: 480px) {
-  :root {
-    --radius: 0.375rem; /* 6px - slightly smaller radius for mobile */
-  }
-  
-  body {
-    font-size: 14px;
-    line-height: 1.5;
+  @layer base {
+    :root {
+      --font-size-base: 13px;
+      --font-size-lg: 15px;
+      --font-size-xl: 17px;
+      --font-size-2xl: 19px;
+      --font-size-3xl: 22px;
+      --font-size-4xl: 26px;
+      --space-16: 12px;
+      --space-20: 16px;
+      --space-24: 20px;
+      --space-32: 24px;
+      --radius-base: 6px;
+      --radius-md: 8px;
+      --radius-lg: 10px;
+    }
+
+    body {
+      font-size: var(--font-size-base);
+      padding-left: var(--space-12);
+      padding-right: var(--space-12);
+    }
   }
 }
+```
