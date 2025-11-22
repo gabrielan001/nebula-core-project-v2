@@ -3,7 +3,13 @@ import { NextRequest } from 'next/server';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 import { createClient } from '@supabase/supabase-js';
-import * as crypto from 'crypto';
+// Web Crypto API for hashing (Edge-compatible)
+async function hashString(message: string): Promise<string> {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 // Initialize Supabase client for audit logging
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -48,11 +54,9 @@ export async function logRequest(
   payload: any,
   status: number
 ) {
-  // Generate a hash of the payload for security
-  const payloadHash = crypto
-    .createHash('sha256')
-    .update(JSON.stringify(payload) || '')
-    .digest('hex');
+  // Generate a hash of the payload for security using Web Crypto API
+  const payloadString = JSON.stringify(payload) || '';
+  const payloadHash = await hashString(payloadString);
 
   await supabase.from('audit_logs').insert({
     team_id: teamId,
